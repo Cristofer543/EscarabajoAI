@@ -50,10 +50,10 @@ app.use(session({
 
 // Conexión a la base de datos MySQL
 const connection = mysql.createConnection({
-  host: 'nyc.domcloud.co',
-  user: 'basededatonoborrarhijodeputa',
-  password: 'R-)qxE9D6o4_U5vwA2',
-  database: 'basededatonoborrarhijodeputa_basededatos'
+  host: 'YOUR HOST',
+  user: 'USERNAME',
+  password: 'PASSWORLD',
+  database: 'DATABASE NAME'
 });
 
 connection.connect((err) => {
