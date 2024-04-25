@@ -50,15 +50,30 @@ app.use(session({
 
 // Conexión a la base de datos MySQL
 const connection = mysql.createConnection({
-  host: 'YOUR HOST',
-  user: 'USERNAME',
-  password: 'PASSWORLD',
-  database: 'DATABASE NAME'
+  host: 'Host',
+  user: 'User',
+  password: 'Password',
+  database: 'Db'
 });
 
 connection.connect((err) => {
-  if (err) throw err;
-  console.log('Conectado a la base de datos MySQL');
+  if (err) {
+    console.error('\x1b[31mError connecting to MySQL database:\x1b[0m', err.message);
+    process.exit(1);
+  }
+  
+  connection.query('SHOW TABLES', (err, results) => {
+    if (err) {
+      console.error('\x1b[31mError fetching database information:\x1b[0m', err.message);
+      return;
+    }
+    const tableCount = results.length;
+    console.log('\x1b[32m-----------------DATABASE ONLINE-----------------\x1b[0m');
+    console.log('\x1b[32mMySQL Database Information:\x1b[0m');
+    console.log('\x1b[32mDatabase Name:\x1b[0m', connection.config.database);
+    console.log('\x1b[32mHost:\x1b[0m', connection.config.host);
+    console.log('\x1b[32mNumber of Tables:\x1b[0m', tableCount);
+  });
 });
 
 // Middleware para verificar si el usuario está autenticado
