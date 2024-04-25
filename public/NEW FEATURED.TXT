@@ -1,0 +1,70 @@
+//ya funciona-1-Agregar que la notificaciones muestren una parte de el texto generado por ia
+//Ya esta agregado-2-Agregar soporte a mas modelos AI, mixtral etc...
+//ya esta agregado-3-agregar un selector de modelo en la configuracion
+//ya esta agregado-4-agregar una funcion para que tenga memoria el modelo
+5-modificar la barra esa de subir archivos y hacerlo mas pequeño y agregar una funcion para que detecte si el modelo llava 7b esta selecionado y si no que no se muestre.
+6-agregar un panel de administracion que tenga las siguientes caracteristicas:
+1-Poder eliminar y agregar usuarios y modificar el plan premium y usuario.
+2-Poner ver la lista de usuarios Registrado
+3-Poder modificar la api desde el panel de administrador y poder agregar mas modelo y que se refleje en la webs los Modelos nuevos Ejemplo: Mixtral Intruc 8x22b (NEW MODEL)
+QUIERO QUE ESO DE NEW MODEL SE LE AGREGUE POR 1 SEMANA Y ASI Sucesivamente.
+
+7-agregar una interfaz para que los usuarios cambie sus password y nombre y que pueda poner Bio y etc,
+
+8-agregar que puedan cambiar sus iconos u avatar.
+
+9-agregar una funcion para que resalte la Sytaxis de los codigos generado por inteligencia altificial.
+
+10-agregar la capacidad de guardar los chat y separarlo por usuario:
+11-ejemplo: Juan tiene 1 chat .
+quiero que ese chat de juan no se le muestre a pedro y asi sucesivamente.
+
+12-Agregar una forma de compartir el chat con otros users.
+13-Agregar una funcion para limitar la cantidad que pueden enviar los usuarios ejemplo:
+
+
+Los premium 100k de mensajes al mes 500 por dia .
+Los Gratis 10k de mensajes al mes 100 por dia .
+
+14-Agregar un antibypass para el login y register y los mensajes para evitar que haga bypass.
+
+15-Mejorar las velocidad de respuesta y agregar mas api para que pueda ser mas rapida la respuesta .
+
+16-Mejorar la interfaz Grafica.
+
+17-Agregar que el Nombre de el Bot se muestre en el chat.
+
+
+
+agregar una siderbard a la izquierda para que muestre los chat y agregar un button para crear un nuevo chat y agregar una funcion para que ejemplo envies el mensajes `puedas regenerarlo denuevo con una ruedita abajo de el mensaje y que lo puedas editar con un lapiz abajo de el mensaje 
+
+<---
+	Agregar un plan premium para los usuarios que pagan y que el plan premius tenga mas velocida de procesamientos de datos y que tenga mas funciones y caracteristicas que los demas ejemplo:
+
+	Plan PREMIUM:
+
+	1-mas velocidad de respuesta.
+	2-mas capacidad de modelos.
+	3-api exclusiva para premium.
+	4-Obtener un icono premium y que en el chat muestre que eres premium.
+	5-La cantidad de tokens aumenta a 100k para todos los modelos.
+	6-La cantidad de mensajes es de 100k mensuales y 500 Por dia
+
+	PLAN GRATIS:
+
+	1-La velocidad es casi similar a la de el premium
+	2-los modelos seran unos 10 a 15 para los usuarios gratis
+	3-la api no esta disponible para los usuarios free
+	4-Obtendras un icono que dira Free y aparecera en el chat similar a el plan premium
+	5-La cantidad de tonkes aumenta a 32k para todos los modelos
+	6-La cantidad de mensajes es de 10k mensuales y 100 Por dia
+--->
+
+EL soporte no estara disponible en Horario 7 am hasta la 5pm repulica dominicana
+
+Subir el proyecto a github y hacerlo privado 
+
+agregar la capacidad de language-selector para que puedan selecionar su lenguaje preferido
+
+Crear una api para que los usuarios premium puedan acceder y poder crear su propia webs o lo que quieran hacer 
+

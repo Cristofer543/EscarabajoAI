@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>DeepInfra Chat</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script>
+    <script src="https://unpkg.com/i18next-browser-languagedetector/dist/umd/i18nextBrowserLanguageDetector.min.js"></script>
+    <script src="https://unpkg.com/i18next-http-backend/dist/umd/i18nextHttpBackend.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  </head>
+  <body>
+    <script>
+      const authToken = localStorage.getItem('authToken');
+      if (!authToken) {
+        window.location.href = 'login.html';
+      }
+      axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
+    </script>
+    <div id="user-profile">
+      <label for="profile-image-input">
+        <img id="profile-icon" src="default_profile.png" alt="User" />
+      </label>
+      <input type="file" id="profile-image-input" style="display: none;" onchange="uploadProfileImage()">
+      <span id="username"></span>
+      <button id="logout-btn" onclick="logout()">Logout</button>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h3>Chats</h3>
+        <button class="btn btn-primary" onclick="createNewChat()">Nuevo Chat</button>
+      </div>
+      <div class="sidebar-content" id="sidebar-content"></div>
+    </div>
+    <div id="chat-container"></div>
+    <div class="chat-container" id="chat-messages"></div>
+    </div>
+    <div class="settings-container">
+      <button class="btn btn-primary" onclick="toggleModelSettings()">Model Settings</button>
+      <div class="notifications-container">
+        <label for="notifications">Notifications:</label>
+        <input type="checkbox" id="notifications" checked onchange="toggleNotifications()">
+      </div>
+      <button class="btn btn-danger" onclick="clearHistory()">Clear History</button>
+    </div>
+    <div class="accessibility-settings">
+      <div>
+        <label for="font-size">Font Size:</label>
+        <input type="range" id="font-size" min="12" max="24" value="16" onchange="updateAccessibility()">
+      </div>
+      <div>
+        <label for="contrast">Contrast:</label>
+        <input type="range" id="contrast" min="0" max="1" step="0.1" value="1" onchange="updateAccessibility()">
+      </div>
+    </div>
+    <div class="input-container">
+      <input type="text" class="form-control" id="input" name="input" placeholder="Enter your message" onkeydown="handleKeydown(event)">
+      <div class="file-input-container">
+        <label for="file-input" class="btn btn-primary file-input-btn" title="Upload file">
+          <i class="fas fa-upload"></i>
+        </label>
+        <input type="file" class="form-control file-input" id="file-input" onchange="sendFile()" style="display: none;">
+      </div>
+      <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+    </div>
+
+    <div class="modal" id="model-settings" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Model Settings</h5>
+            <button type="button" class="btn-close" onclick="toggleModelSettings()"></button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <label for="temperature">Temperature:</label>
+              <input type="range" id="temperature" min="0" max="1" step="0.1" value="0" onchange="updateSettings()">
+            </div>
+            <div>
+              <label for="top_p">Top-P:</label>
+              <input type="range" id="top_p" min="0" max="1" step="0.1" value="0.9" onchange="updateSettings()">
+            </div>
+            <div>
+              <label for="top_k">Top-K:</label>
+              <input type="number" id="top_k" min="0" max="100" value="0" onchange="updateSettings()">
+            </div>
+            <div>
+              <label for="max_new_tokens">Max New Tokens:</label>
+              <input type="number" id="max_new_tokens" min="1" max="32768" value="32768" onchange="updateSettings()">
+            </div>
+            <div>
+              <label for="model">Model:</label>
+              <select id="model" onchange="updateSettings()">
+                <option value="databricks/dbrx-instruct">DBRX-INSTRUCT</option>
+                <option value="mixtral/mixtral-instruct">Mixtral</option>
+                <option value="mistralai/Mixtral-8x22B-Instruct-v0.1">MIXTRAL-8X22B</option>
+                <option value="microsoft/WizardLM-2-8x22B">WizardLM-2-8x22B</option>
+                <option value="llava-hf/llava-1.5-7b-hf">Llava-7B</option>
+                <option value="microsoft/WizardLM-2-7B">WizardLM-2-7B</option>
+                <option value="HuggingFaceH4/zephyr-orpo-141b-A35b-v0.1">Zephyr-Orpo-141B-A35B</option>
+                <option value="mistralai/Mixtral-8x22B-Instruct-v0.1">Mixtral-8x22B-Instruct</option>
+                <option value="google/gemma-1.1-7b-it">Gemma-1.1-7B-IT</option>
+                <option value="mistralai/Mistral-7B-Instruct-v0.2">Mistral-7B-Instruct</option>
+                <option value="meta-llama/Llama-2-70b-chat-hf">Llama-2-70B-Chat</option>
+                <option value="mistralai/Mixtral-8x7B-Instruct-v0.1">Mixtral-8x7B-Instruct</option>
+                <option value="cognitivecomputations/dolphin-2.6-mixtral-8x7b">Dolphin-2.6-Mixtral-8x7B</option>
+                <option value="lizpreciatior/lzlv_70b_fp16_hf">LZLV-70B-FP16</option>
+                <option value="openchat/openchat_3.5">OpenChat-3.5</option>
+                <option value="deepinfra/airoboros-70b">Airoboros-70B</option>
+                <option value="meta-llama/Meta-Llama-3-70B-Instruct">Llama-3-70B-Instruct</option>
+              </select>
+            </div>
+            <div class="model-settings-row">
+              <button onclick="saveModelSettings()">Save Settings</button>
+              <button onclick="loadModelSettings()">Load Settings</button>
+              <label for="dark-mode">Dark Mode:</label>
+              <input type="checkbox" id="dark-mode" onchange="toggleDarkMode()">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.onload = async () => {
+        await loadHistory();
+        await updateAccessibility();
+        await getUserName();
+        await toggleModelSettings();
+        loadModelSettings();
+        loadDarkMode();
+        displayUserChats(); // Llamar a la función para mostrar los chats del usuario
+      };
+    </script>
+<script src="syntax-highlight.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script src="script.js"></script>
+  </body>
+</html>
